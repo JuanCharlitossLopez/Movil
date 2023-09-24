@@ -1,8 +1,9 @@
+
 package com.example.app_superheroes_juancarlos.model
 
 import com.example.app_superheroes_juancarlos.R
 
-class HeroesDataSource {
+object HeroesRepository {
     val heroes = listOf(
         Hero(
             nameRes = R.string.hero1,
