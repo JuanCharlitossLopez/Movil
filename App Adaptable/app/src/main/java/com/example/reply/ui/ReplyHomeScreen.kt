@@ -121,12 +121,24 @@ fun ReplyHomeScreen(
             )
         }
     } else {
-        ReplyDetailsScreen(
-            replyUiState = replyUiState,
-            isFullScreen = true,
-            onBackPressed = onDetailScreenBackPressed,
-            modifier = modifier
-        )
+        if (replyUiState.isShowingHomepage) {
+            ReplyAppContent(
+                navigationType = navigationType,
+                contentType = contentType,
+                replyUiState = replyUiState,
+                onTabPressed = onTabPressed,
+                onEmailCardPressed = onEmailCardPressed,
+                navigationItemContentList = navigationItemContentList,
+                modifier = modifier
+            )
+        } else {
+            ReplyDetailsScreen(
+                replyUiState = replyUiState,
+                onBackPressed = onDetailScreenBackPressed,
+                modifier = modifier,
+                isFullScreen = true
+            )
+        }
     }
 }
 
@@ -158,17 +170,16 @@ private fun ReplyAppContent(
                     .background(MaterialTheme.colorScheme.inverseOnSurface)
             ) {
                 if (contentType == ReplyContentType.LIST_AND_DETAIL) {
-                    ReplyListOnlyContent(
+                    ReplyListAndDetailContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 } else {
                     ReplyListOnlyContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier = Modifier.weight(1f)
                             .padding(
                                 horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
                             )
@@ -177,10 +188,14 @@ private fun ReplyAppContent(
                 AnimatedVisibility(
                     visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION
                 ) {
+                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
                     ReplyBottomNavigationBar(
                         currentTab = replyUiState.currentMailbox,
                         onTabPressed = onTabPressed,
-                        navigationItemContentList = navigationItemContentList
+                        navigationItemContentList = navigationItemContentList,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag(bottomNavigationContentDescription)
                     )
                 }
             }

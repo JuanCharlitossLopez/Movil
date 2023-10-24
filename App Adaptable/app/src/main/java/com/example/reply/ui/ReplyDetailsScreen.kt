@@ -36,7 +36,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.reply.R
@@ -56,7 +56,7 @@ fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
-    isFullScreen: Boolean = false,
+    isFullScreen: Boolean = false
 ) {
     BackHandler {
         onBackPressed()
@@ -64,12 +64,13 @@ fun ReplyDetailsScreen(
     Box(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
+                .testTag(stringResource(R.string.details_screen))
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
                 .padding(top = dimensionResource(R.dimen.detail_card_list_padding_top))
         ) {
             item {
-                if(isFullScreen){
+                if (isFullScreen) {
                     ReplyDetailsScreenTopBar(
                         onBackPressed,
                         replyUiState,
@@ -78,11 +79,11 @@ fun ReplyDetailsScreen(
                             .padding(bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom))
                     )
                 }
-
                 ReplyEmailDetailsCard(
                     email = replyUiState.currentSelectedEmail,
                     mailboxType = replyUiState.currentMailbox,
-                    modifier = if(isFullScreen){
+                    isFullScreen = isFullScreen,
+                    modifier = if (isFullScreen) {
                         Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                     } else {
                         Modifier.padding(end = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
@@ -128,7 +129,7 @@ private fun ReplyDetailsScreenTopBar(
         }
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 private fun ReplyEmailDetailsCard(
     email: Email,
@@ -297,8 +298,7 @@ private fun ActionButton(
         ) {
             Text(
                 text = text,
-                color =
-                if (containIrreversibleAction) {
+                color = if (containIrreversibleAction) {
                     MaterialTheme.colorScheme.onError
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant

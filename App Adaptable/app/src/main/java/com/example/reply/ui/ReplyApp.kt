@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
-import com.example.reply.ui.utils.ReplyNavigationType
 import com.example.reply.ui.utils.ReplyContentType
+import com.example.reply.ui.utils.ReplyNavigationType
 
 @Composable
 fun ReplyApp(
@@ -31,11 +31,9 @@ fun ReplyApp(
     modifier: Modifier = Modifier,
 ) {
     val navigationType: ReplyNavigationType
+    val contentType: ReplyContentType
     val viewModel: ReplyViewModel = viewModel()
     val replyUiState = viewModel.uiState.collectAsState().value
-    //
-    val contentType: ReplyContentType
-
 
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {

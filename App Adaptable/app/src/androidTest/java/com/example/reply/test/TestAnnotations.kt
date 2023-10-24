@@ -13,17 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.reply.ui
+package com.example.reply.test
 
-import com.example.reply.data.Email
-import com.example.reply.data.MailboxType
-import com.example.reply.data.local.LocalEmailsDataProvider
-
-data class ReplyUiState(
-    val mailboxes: Map<MailboxType, List<Email>> = emptyMap(),
-    val currentMailbox: MailboxType = MailboxType.Inbox,
-    val currentSelectedEmail: Email = LocalEmailsDataProvider.defaultEmail,
-    val isShowingHomepage: Boolean = true
-) {
-    val currentMailboxEmails: List<Email> by lazy { mailboxes[currentMailbox]!! }
-}
+annotation class TestCompactWidth
+annotation class TestMediumWidth
+annotation class TestExpandedWidth
