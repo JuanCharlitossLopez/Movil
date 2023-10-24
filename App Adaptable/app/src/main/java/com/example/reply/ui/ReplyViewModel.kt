@@ -47,7 +47,7 @@ class ReplyViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 currentSelectedEmail = email,
-                isShowingHomepage = false
+                //isShowingHomepage = false
             )
         }
     }
@@ -57,7 +57,7 @@ class ReplyViewModel : ViewModel() {
             it.copy(
                 currentSelectedEmail = it.mailboxes[it.currentMailbox]?.get(0)
                     ?: LocalEmailsDataProvider.defaultEmail,
-                isShowingHomepage = true
+                //isShowingHomepage = true
             )
         }
     }
